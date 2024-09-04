@@ -7,6 +7,8 @@ import AddIcon from '../../assets/add-icon.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 
 const KeyManagement = () => {
     const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ const KeyManagement = () => {
                 console.error('No token found. Please log in.');
                 return;
             }
-            const response = await axios.get('http://localhost:5000/api/gpt-key', {
+            const response = await axios.get(`${apiBaseUrl}/api/gpt-key`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             // console.log(response.data.key); // Direct access to the key
@@ -53,7 +55,7 @@ const KeyManagement = () => {
                 console.error('No token found. Please log in.');
                 return;
             }
-            const response = await axios.get('http://localhost:5000/api/pubmed-key', {
+            const response = await axios.get(`${apiBaseUrl}/api/pubmed-key`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setPubMedKey(response.data.key);
@@ -112,8 +114,8 @@ const KeyManagement = () => {
             }
 
             const response = !gptKey
-                ? await axios.post('http://localhost:5000/api/gpt-key', { key: newGptKey }, { headers: { 'Authorization': `Bearer ${token}` } })
-                : await axios.put('http://localhost:5000/api/gpt-key', { key: newGptKey }, { headers: { 'Authorization': `Bearer ${token}` } });
+                ? await axios.post(`${apiBaseUrl}/api/gpt-key`, { key: newGptKey }, { headers: { 'Authorization': `Bearer ${token}` } })
+                : await axios.put(`${apiBaseUrl}/api/gpt-key`, { key: newGptKey }, { headers: { 'Authorization': `Bearer ${token}` } });
 
             setGptKey(newGptKey);
             setIsEditingGpt(false);
@@ -142,8 +144,8 @@ const KeyManagement = () => {
             }
 
             const response = !gptKey
-                ? await axios.post('http://localhost:5000/api/pubmed-key', { key: newPubMedKey }, { headers: { 'Authorization': `Bearer ${token}` } })
-                : await axios.put('http://localhost:5000/api/pubmed-key', { key: newPubMedKey }, { headers: { 'Authorization': `Bearer ${token}` } });
+                ? await axios.post(`${apiBaseUrl}/api/pubmed-key`, { key: newPubMedKey }, { headers: { 'Authorization': `Bearer ${token}` } })
+                : await axios.put(`${apiBaseUrl}/api/pubmed-key`, { key: newPubMedKey }, { headers: { 'Authorization': `Bearer ${token}` } });
 
             setPubMedKey(newPubMedKey);
             setIsEditingPubMed(false);

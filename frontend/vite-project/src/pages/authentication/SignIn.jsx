@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
-
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 const SignIn = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const SignIn = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/api/login', formData);
+            const response = await axios.post(`${apiBaseUrl}/api/login`, formData);
             console.log(response);
 
             toast.success(`${response.data.message}`, {

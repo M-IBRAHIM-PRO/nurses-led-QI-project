@@ -7,6 +7,8 @@ import image from '../../assets/nodata.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 
 const ClientProject = () => {
     const [ownedProjects, setOwnedProjects] = useState([]);
@@ -28,7 +30,7 @@ const ClientProject = () => {
                 console.error('No token found. Please log in.');
                 return;
             }
-            const response = await axios.get('http://localhost:5000/api/projects', {
+            const response = await axios.get(`${apiBaseUrl}/api/projects`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setOwnedProjects(response.data.involvedProjects || []);
@@ -96,7 +98,7 @@ const ClientProject = () => {
             }
 
             // Make sure the URL is correct and the API route exists
-            await axios.post(`http://localhost:5000/api/projects/${projectId}/request-collaboration`, {}, {
+            await axios.post(`${apiBaseUrl}/api/projects/${projectId}/request-collaboration`, {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

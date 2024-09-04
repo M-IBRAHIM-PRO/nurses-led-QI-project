@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 
 const ViewProjectModal = ({ project, onClose }) => {
     const [numberOfArticles, setNumberOfArticles] = useState(10);
@@ -113,7 +115,7 @@ const ViewProjectModal = ({ project, onClose }) => {
                 setLoading(false);
                 return;
             }
-            const response = await axios.post('http://localhost:5000/api/generate-search-query', { title, description }, {
+            const response = await axios.post(`${apiBaseUrl}/api/generate-search-query`, { title, description }, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setSearchQuery(response.data.searchQuery);
@@ -139,7 +141,7 @@ const ViewProjectModal = ({ project, onClose }) => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/add-collaborator', { projectId: project._id, email }, {
+            const response = await axios.post(`${apiBaseUrl}/api/add-collaborator`, { projectId: project._id, email }, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             toast.success(response.data.message, {

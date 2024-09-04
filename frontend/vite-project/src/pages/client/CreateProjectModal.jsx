@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 
 const CreateProjectModal = ({ onClose, onCreate }) => {
     const [title, setTitle] = useState('');
@@ -16,7 +18,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.post('http://localhost:5000/api/create-project', {
+            const response = await axios.post(`${apiBaseUrl}/api/create-project`, {
                 title,
                 description,
                 searchQuery: {
@@ -56,7 +58,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
                 console.error('No token found. Please log in.');
                 return;
             }
-            const response = await axios.post('http://localhost:5000/api/generate-search-query', {
+            const response = await axios.post(`${apiBaseUrl}/api/generate-search-query`, {
                 title,
                 description,
             }, {

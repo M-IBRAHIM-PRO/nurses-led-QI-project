@@ -5,7 +5,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
-
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const localHostUrl=import.meta.env.LOCAL_URL;
 const SignUp = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const SignUp = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/api/register', formData);
+            const response = await axios.post(`${apiBaseUrl}/api/register`, formData);
             toast.success('User created successfully', {
                 autoClose: 2000,
                 hideProgressBar: true,
