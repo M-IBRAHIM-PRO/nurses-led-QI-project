@@ -22,7 +22,7 @@ const createDocument = async (req, res) => {
     try {
         // Fetch data from API
         const response = await axios.post(
-            "http://127.0.0.1:5001/pubmed-search",
+            "https://nurses-led-qi-project-flaskapi.onrender.com/pubmed-search",
             {
                 max_results: numberOfArticles,
                 query: searchQuery,
