@@ -20,7 +20,7 @@ const ViewProjectModal = ({ project, onClose }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get("http://localhost:5000/api/gpt-key", {
+            const response = await axios.get(`${apiBaseUrl}/api/gpt-key`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setGptKey(response.data.key);
