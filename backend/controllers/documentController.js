@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Document = require('../models/documentModel'); // Adjust the path as needed
 const Project = require('../models/projectModel'); // Adjust the path as needed
+const GPTController=require('./gptController');
 const axios = require('axios');
 const { authenticate, uploadFile } = require('../utils/googleDriveConfig');
 // const { createObjectCsvWriter } = require('csv-writer')
@@ -14,6 +15,7 @@ const json2csv = require('json2csv').parse;
 const createDocument = async (req, res) => {
     const { projectId, numberOfArticles, searchQuery, gptKey, userEmail } = req.body;
     const userId = req.user.id; // Assuming req.user.id is set from authentication middleware
+    // const gptKey=await GPTController.getGPTKeyPrivate();
 
     if (!projectId || !numberOfArticles || !searchQuery) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -47,45 +49,6 @@ const createDocument = async (req, res) => {
         if (!fs.existsSync(tmpDir)) {
             fs.mkdirSync(tmpDir, { recursive: true });
         }
-
-        // const csvWriter = createObjectCsvWriter({
-        //     path: filePath,
-        //     header: [
-        //         { id: 'Title', title: 'Title' },
-        //         { id: 'Authors', title: 'Authors' },
-        //         { id: 'Purpose', title: 'Purpose' },
-        //         { id: 'DesignMethod', title: 'Design & Method' },
-        //         { id: 'SampleSettings', title: 'Sample & Settings' },
-        //         { id: 'MajorVariables', title: 'Major Variables Studied & Definitions' },
-        //         { id: 'Measurement', title: 'Measurement of Variables' },
-        //         { id: 'DataAnalysis', title: 'Data Analysis' },
-        //         { id: 'Findings', title: 'Findings' },
-        //         { id: 'Limitations', title: 'Limitations' },
-        //         { id: 'WorthOfPractice', title: 'Worth of Practice - Applicability' },
-        //         { id: 'Citation', title: 'Citation (APA Format)' },
-        //         { id: 'URL', title: 'URL' }
-        //     ]
-        // });
-
-        // // Transform data to match the expected structure
-        // const records = data.map(item => ({
-        //     Title: item.Title,
-        //     Authors: item.Authors,
-        //     Citation: item["Citation (APA Format)"],
-        //     Purpose: item.Purpose,
-        //     DesignMethod: item["Design & Method"],
-        //     SampleSettings: item["Sample & Settings"],
-        //     MajorVariables: item["Major Variables Studied & Definitions"],
-        //     Measurement: item["Measurement of Variables"],
-        //     DataAnalysis: item["Data Analysis"],
-        //     Findings: item.Findings,
-        //     Limitations: item.Limitations,
-        //     WorthOfPractice: item["Worth of Practice - Applicability"],
-        //     URL: item.URL
-        // }));
-
-        // await csvWriter.writeRecords(records);
-
 
         const fields = ['Citation (APA Format)', 'Purpose', 'Design & Method', 'Sample & Settings', 'Major Variables Studied & Definitions', 'Measurement of Variables', 'Data Analysis', 'Findings', 'Limitations', 'Worth of Practice - Applicability','Title', 'URL'];
 
