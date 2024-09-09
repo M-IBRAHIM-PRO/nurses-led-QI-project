@@ -12,22 +12,26 @@ import KeyManagement from "./pages/client/KeyManagement";
 const MainRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<InnerContent/>}>
-              
+            <Route path="/" element={<InnerContent />}>
+                <Route path="/" element={<PublicRoutes />}>
+                    {/* Root path "/" displays the login page */}
+                    <Route index element={<SignIn />} />
+                    <Route path="register" element={<SignUp />} />
+                </Route>
                 <Route
                     path="client"
                     element={<ProtectedRoutes />}
                 >
-                   
-                    <Route path="projects" element={<ClientProjectPage/>} />
-                    <Route path="keys" element={<KeyManagement/>} />
+
+                    <Route path="projects" element={<ClientProjectPage />} />
+                    <Route path="keys" element={<KeyManagement />} />
                 </Route>
-                <Route path="login" element={<PublicRoutes />} >
+                {/* <Route path="login" element={<PublicRoutes />} >
                     <Route index element={<SignIn />} />
                 </Route>
                 <Route path="register" element={<PublicRoutes />} >
                     <Route index element={<SignUp />} />
-                </Route>
+                </Route> */}
             </Route>
         </Routes>
     );
